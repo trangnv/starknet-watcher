@@ -1,10 +1,10 @@
 scalar Text
 
-type Post {
+type Transfer {
   id: String!
-  author: String!
-  content: Text!
-  tag: String
+  from: String
+  to: String!
+  value: Int!
   tx_hash: String!
   created_at: Int!
   created_at_block: Int!

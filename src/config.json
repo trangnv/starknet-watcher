@@ -3,12 +3,12 @@
   "sources": [
     {
       "contract": "0x049d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7",
-      "start": 185778,
+      "start": 10000,
       "deploy_fn": "handleDeploy",
       "events": [
         {
-          "name": "new_post",
-          "fn": "handleNewPost"
+          "name": "Transfer",
+          "fn": "handleTransfer"
         }
       ]
     }

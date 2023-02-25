@@ -1,4 +1,5 @@
-import 'dotenv/config';
+const dotenv = require('dotenv');
+dotenv.config();
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
@@ -8,7 +9,7 @@ import config from './config.json';
 import * as writers from './writers';
 // import checkpointBlocks from './checkpoints.json';
 
-const INFURA_API_KEY = process.env.API_KEY;
+const INFURA_API_KEY = process.env.INFURA_API_KEY;
 config['network_node_url'] = `https://starknet-mainnet.infura.io/v3/${INFURA_API_KEY}`;
 
 const dir = __dirname.endsWith('dist/src') ? '../' : '';
