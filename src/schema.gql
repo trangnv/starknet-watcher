@@ -1,10 +1,8 @@
 scalar Text
 
-type Transfer {
+type new_acc {
   id: String!
-  from: String
-  to: String!
-  value: Int!
+  public_key: String!
   tx_hash: String!
   created_at: Int!
   created_at_block: Int!

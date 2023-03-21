@@ -1,16 +1,10 @@
 {
   "network_node_url": "",
-  "sources": [
+  "start": 16555,
+  "global_events": [
     {
-      "contract": "0x049d36570d4e46f48e99674bd3fcc84644ddd6b96f7c741b1562b82f9e004dc7",
-      "start": 10000,
-      "deploy_fn": "handleDeploy",
-      "events": [
-        {
-          "name": "Transfer",
-          "fn": "handleTransfer"
-        }
-      ]
+      "name": "account_initialized",
+      "fn": "handle_account_initialized"
     }
   ]
 }
