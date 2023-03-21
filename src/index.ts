@@ -1,4 +1,5 @@
-import 'dotenv/config';
+const dotenv = require('dotenv');
+dotenv.config();
 import express from 'express';
 import cors from 'cors';
 import path from 'path';
@@ -6,7 +7,10 @@ import fs from 'fs';
 import Checkpoint, { LogLevel } from '@snapshot-labs/checkpoint';
 import config from './config.json';
 import * as writers from './writers';
-import checkpointBlocks from './checkpoints.json';
+// import checkpointBlocks from './checkpoints.json';
+
+const INFURA_API_KEY = process.env.INFURA_API_KEY;
+config['network_node_url'] = `https://starknet-mainnet.infura.io/v3/${INFURA_API_KEY}`;
 
 const dir = __dirname.endsWith('dist/src') ? '../' : '';
 const schemaFile = path.join(__dirname, `${dir}../src/schema.gql`);
@@ -25,7 +29,7 @@ const checkpoint = new Checkpoint(config, writers, schema, checkpointOptions);
 // ensures data is always fresh on each re-run
 checkpoint
   .reset()
-  .then(() => checkpoint.seedCheckpoints(checkpointBlocks))
+  // .then(() => checkpoint.seedCheckpoints(checkpointBlocks))
   .then(() => {
     // start the indexer
     checkpoint.start();

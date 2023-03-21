@@ -1,10 +1,8 @@
 scalar Text
 
-type Post {
+type new_acc {
   id: String!
-  author: String!
-  content: Text!
-  tag: String
+  public_key: String!
   tx_hash: String!
   created_at: Int!
   created_at_block: Int!
