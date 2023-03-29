@@ -1,10 +1,9 @@
 {
   "network_node_url": "",
-  "start": 16555,
   "global_events": [
     {
-      "name": "account_initialized",
-      "fn": "handle_account_initialized"
+      "name": "account_upgraded",
+      "fn": "handle_account_upgraded"
     }
   ]
 }

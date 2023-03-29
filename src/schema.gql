@@ -1,9 +1,10 @@
 scalar Text
 
-type new_acc {
+type acc_impl {
   id: String!
-  public_key: String!
+  implementation: String!
   tx_hash: String!
   created_at: Int!
   created_at_block: Int!
+  from_address: String!
 }

@@ -10,31 +10,28 @@ import type { CheckpointWriter } from '@snapshot-labs/checkpoint';
 //
 // See here for the original logic used to create post transactions:
 // https://gist.github.com/perfectmak/417a4dab69243c517654195edf100ef9#file-index-ts
-export async function handle_account_initialized({
+export async function handle_account_upgraded({
   block,
   tx,
-  event,
+  rawEvent,
   mysql
 }: Parameters<CheckpointWriter>[0]) {
-  if (!event) return;
-
-  const public_key = toAddress(event.data[0]);
-  // const to = toAddress(event.data[1]);
-  // const value = BigInt(event.data[2]);
+  if (!rawEvent) return;
+  const implementation = toAddress(rawEvent.data[0]);
+  const from_address = rawEvent.from_address;
   const timestamp = block.timestamp;
   const blockNumber = block.block_number;
 
   // transfer object matches fields of Transfer type in schema.gql
-  const new_acc = {
+  const acc_impl = {
     id: `${tx.transaction_hash}`,
-    public_key,
-    // to,
-    // value,
+    implementation: implementation,
+    from_address: from_address,
     tx_hash: tx.transaction_hash,
     created_at: timestamp,
     created_at_block: blockNumber
   };
 
   // table names are `lowercase(TypeName)s` and can be interacted with sql
-  await mysql.queryAsync('INSERT IGNORE INTO new_accs SET ?', [new_acc]);
+  await mysql.queryAsync('INSERT IGNORE INTO acc_impls SET ?', [acc_impl]);
 }
