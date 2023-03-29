@@ -46,14 +46,13 @@ To fetch a list of Post's try the following query:
 
 ```graphql
 query {
-  posts {
+  acc_impls {
     id
-    author
-    content
-    tag
-    created_at_block
-    created_at
+    implementation
     tx_hash
+    created_at
+    created_at_block
+    from_address
   }
 }
 ```
