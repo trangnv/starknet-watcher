@@ -43,3 +43,37 @@ def query_account_creates():
         offset += chunk_size
     
     return account_creates
+
+def query_account_upgrades():
+    account_upgrades = []
+    offset = 0
+    chunk_size = 1000
+    while True:
+        query = """
+          {
+            account_upgrades(
+                first: %d, 
+                skip: %d,
+                orderBy: created_at_block,
+                orderDirection: asc
+            ) {
+                id
+                from_address
+                created_at
+                created_at_block
+                implementation
+            }
+          }
+          """ % (
+            chunk_size,
+            offset,
+        )
+        result = submit_query(query)
+        account_upgrade_records = result["data"]["account_upgrades"]
+        if len(account_upgrade_records) == 0:
+            break
+        account_upgrades+=account_upgrade_records
+
+        offset += chunk_size
+    
+    return account_upgrades

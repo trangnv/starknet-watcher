@@ -11,3 +11,7 @@ coverage
 *.log
 notebooks/data/
 __pycache__/
+
+# Quarto
+/.quarto/
+docs/
