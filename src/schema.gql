@@ -1,10 +1,16 @@
 scalar Text
 
-type acc_impl {
+type account_upgrade {
   id: String!
-  implementation: String!
-  tx_hash: String!
+  from_address: String!
   created_at: Int!
   created_at_block: Int!
+  implementation: String!
+}
+
+type account_create {
+  id: String!
   from_address: String!
+  created_at: Int!
+  created_at_block: Int!
 }

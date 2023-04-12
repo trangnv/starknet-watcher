@@ -4,6 +4,10 @@
     {
       "name": "account_upgraded",
       "fn": "handle_account_upgraded"
+    },
+    {
+      "name": "account_created",
+      "fn": "handle_account_created"
     }
   ]
 }
