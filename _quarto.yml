@@ -8,4 +8,5 @@ website:
     background: primary
     search: true
 theme:
+  light: flatly
   dark: darkly
