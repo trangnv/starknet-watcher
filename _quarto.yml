@@ -1,12 +1,17 @@
 project:
   type: website
   output-dir: docs
-execute:
-  freeze: auto
-website:
-  navbar:
-    background: primary
-    search: true
-theme:
-  light: flatly
-  dark: darkly
+  resources:
+    - page-layout/tufte.pdf
+# project:
+#   type: website
+#   output-dir: docs
+# execute:
+#   freeze: auto
+# website:
+#   navbar:
+#     background: primary
+#     search: true
+# theme:
+#   light: flatly
+#   dark: darkly

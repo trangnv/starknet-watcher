@@ -1,4 +1,5 @@
 import requests
+import json
 
 graph_url = 'http://localhost:3000/'
 
@@ -41,6 +42,9 @@ def query_account_creates():
         account_creates+=account_create_records
 
         offset += chunk_size
+    last_query_block = account_creates[-1]['created_at_block'] - 1
+    with open(f'data/account_creates_up_to_block_{last_query_block}.json', 'w') as f:
+        json.dump({"account_creates":account_creates}, f)
     
     return account_creates
 
@@ -75,5 +79,7 @@ def query_account_upgrades():
         account_upgrades+=account_upgrade_records
 
         offset += chunk_size
-    
+    last_query_block = account_upgrades[-1]['created_at_block'] - 1
+    with open(f'data/account_upgrades_up_to_block_{last_query_block}.json', 'w') as f:
+        json.dump({"account_upgrades":account_upgrades}, f)
     return account_upgrades
