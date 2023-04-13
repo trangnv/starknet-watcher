@@ -6,7 +6,6 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="trangnv">
 
 <title>Starknet Accounts Dashboard</title>
 <style>
@@ -124,8 +123,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-submit-button-title": "Submit"
   }
 }</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script>
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
 
+<link rel="stylesheet" href="styles.css">
 </head>
 
 <body class="nav-fixed">
@@ -146,7 +150,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#aaa" id="toc-aaa" class="nav-link active" data-scroll-target="#aaa">aaa</a>
+  <ul class="collapse">
+  <li><a href="#agsdg" id="toc-agsdg" class="nav-link" data-scroll-target="#agsdg">agsdg</a></li>
+  </ul></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -160,12 +173,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>trangnv </p>
-          </div>
-  </div>
     
   
     
@@ -174,36 +181,261 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 </header>
 
-<div class="cell">
+<div class="cell" data-execution_count="2">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> utils.query <span class="im">import</span> query_account_creates</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> utils.query <span class="im">import</span> query_account_creates, query_account_upgrades</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell">
+<section id="aaa" class="level1">
+<h1>aaa</h1>
+<section id="agsdg" class="level3">
+<h3 class="anchored" data-anchor-id="agsdg">agsdg</h3>
+<div class="cell" data-execution_count="3">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Query and save data</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">## account_creates</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>account_creates_list <span class="op">=</span> query_account_creates()</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>last_query_block <span class="op">=</span> account_creates_list[<span class="op">-</span><span class="dv">1</span>][<span class="st">'created_at_block'</span>] <span class="op">-</span> <span class="dv">1</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="ss">f'data/account_creates_up_to_block_</span><span class="sc">{</span>last_query_block<span class="sc">}</span><span class="ss">.json'</span>, <span class="st">'w'</span>) <span class="im">as</span> f:</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    json.dump({<span class="st">"account_creates"</span>:account_creates_list}, f)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">## account_upgrades</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>account_upgrades_list <span class="op">=</span> query_account_upgrades()</span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">## account_upgrades</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co">## save data</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>last_query_block <span class="op">=</span> account_creates_list[<span class="op">-</span><span class="dv">1</span>][<span class="st">'created_at_block'</span>] <span class="op">-</span> <span class="dv">1</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="ss">f'data/account_creates_up_to_block_</span><span class="sc">{</span>last_query_block<span class="sc">}</span><span class="ss">.json'</span>, <span class="st">'w'</span>) <span class="im">as</span> f:</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    json.dump({<span class="st">"account_creates"</span>:account_creates_list}, f)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="ss">f'data/account_upgrades_up_to_block_</span><span class="sc">{</span>last_query_block<span class="sc">}</span><span class="ss">.json'</span>, <span class="st">'w'</span>) <span class="im">as</span> f:</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    json.dump({<span class="st">"account_creates"</span>:account_upgrades_list}, f)</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell">
+<div class="cell" data-execution_count="4">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(q)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(account_creates_list)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+<div class="cell-output cell-output-display" data-execution_count="4">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>id</th>
+      <th>from_address</th>
+      <th>created_at</th>
+      <th>created_at_block</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0x2b5f4af6bc5cfb032c83baef17ca99ee46f2d60997d5...</td>
+      <td>0x2a7f765dc8a9030e3ec393f51d5b0244a21ae55b7148...</td>
+      <td>1655372577</td>
+      <td>2710</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0x3ef53cf0fbad0edde37c1ee24ebc57433f39728dcaa9...</td>
+      <td>0x179b1211aed20097bbba0369088db3d30ece0550015c...</td>
+      <td>1655380283</td>
+      <td>2711</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0x5f733c678cdcf3600e623c82be5fc773c487f361f164...</td>
+      <td>0x623efd6c07c219834db614400804e244b1cadfb6016c...</td>
+      <td>1655390756</td>
+      <td>2713</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0x6e884ba9506e4729858852c7097d6e741a8e4f5508ca...</td>
+      <td>0x2f9aa38ee23fba8b283af247c603b05b2eaa160d68aa...</td>
+      <td>1655397921</td>
+      <td>2714</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0x2d895f0a23171d5a008072c74b8169938e19834870d4...</td>
+      <td>0x35cc2db92bd5f244ccee2afcf14a9bca0ec5243f0b09...</td>
+      <td>1655405163</td>
+      <td>2715</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>281206</th>
+      <td>0x62a3491cc157184a16b67909ab10b9bcf9347e106719...</td>
+      <td>0x163893a74b08f44fa8f86d170e2a66f8c37d37408796...</td>
+      <td>1671772168</td>
+      <td>17371</td>
+    </tr>
+    <tr>
+      <th>281207</th>
+      <td>0x64ae7917e8c74024b9fae833017a076f3eeaaf7f3319...</td>
+      <td>0x34a7cfb7499ae798a5ee0340517d354962212c5baec2...</td>
+      <td>1671772168</td>
+      <td>17371</td>
+    </tr>
+    <tr>
+      <th>281208</th>
+      <td>0x6919a2d0717b2407d262619223d8b4f98ded714ff6c6...</td>
+      <td>0x18b12053d801e66a604d6e49eb7f5f86e5ea3b143b62...</td>
+      <td>1671772168</td>
+      <td>17371</td>
+    </tr>
+    <tr>
+      <th>281209</th>
+      <td>0x6640613f656eeb0aeb890998ff5954f7a6ad2c7c6b86...</td>
+      <td>0x501e20f8281cd2d53965d5b12923bf3b695538641721...</td>
+      <td>1671772168</td>
+      <td>17371</td>
+    </tr>
+    <tr>
+      <th>281210</th>
+      <td>0x3c24d01068c9cbedcd94998ae4e85ef5ad82804f2c1b...</td>
+      <td>0x25575dde0698f138f5e39b55933bd915a085a9839d4f...</td>
+      <td>1671772168</td>
+      <td>17371</td>
+    </tr>
+  </tbody>
+</table>
+<p>281211 rows × 4 columns</p>
+</div>
+</div>
+</div>
+<div class="cell" data-execution_count="5">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>pd.DataFrame(account_upgrades_list)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display" data-execution_count="5">
+
+<div>
+
+<table class="dataframe table table-sm table-striped">
+  <thead>
+    <tr>
+      <th></th>
+      <th>id</th>
+      <th>from_address</th>
+      <th>created_at</th>
+      <th>created_at_block</th>
+      <th>implementation</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0x124ccb5b22d5cd751008d2d1dca3bb9f1c145f694ada...</td>
+      <td>0x655d962eb3986f736caf9c27b425595855012b85afb0...</td>
+      <td>1650593011</td>
+      <td>1841</td>
+      <td>0x1bd7ca87f139693e6681be2042194cf631c4e8d77027...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0x1b18b3290be8554ffd6e2460c386373ae8ab5d4b5be0...</td>
+      <td>0x2ec7ac67d306407f0c2a0a367e7ba13ba53197d41558...</td>
+      <td>1650639147</td>
+      <td>1847</td>
+      <td>0x1bd7ca87f139693e6681be2042194cf631c4e8d77027...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0x2314a266427aa7705d6ebaadb08b0b0c3adc4a8131d9...</td>
+      <td>0x4944d439be5d7250e7691b9d399d7f996370256fac20...</td>
+      <td>1650639147</td>
+      <td>1847</td>
+      <td>0x1bd7ca87f139693e6681be2042194cf631c4e8d77027...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0x459be971b14ec5de49d93d2456ac30aa2d8997c936d1...</td>
+      <td>0x15aef0dd2b763c16008e6f5bf7ddd73dc40c8cec4972...</td>
+      <td>1650639147</td>
+      <td>1847</td>
+      <td>0x1bd7ca87f139693e6681be2042194cf631c4e8d77027...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0x6954966b18946916cc40c43be79370dfadfe4079ffa4...</td>
+      <td>0xe916eda2b5c226f6994c74a9fa05f6f0971672e91398...</td>
+      <td>1650639147</td>
+      <td>1847</td>
+      <td>0x1bd7ca87f139693e6681be2042194cf631c4e8d77027...</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>57116</th>
+      <td>0x76ba9a73816abcb6f3b9419934f80f3ddc03e4b6cd03...</td>
+      <td>0x5e87514c0b6e962ba589ae9dcdfa1e48afea6a1c7ba8...</td>
+      <td>1671772168</td>
+      <td>17371</td>
+      <td>0x33434ad846cdd5f23eb73ff09fe6fddd568284a0fb7d...</td>
+    </tr>
+    <tr>
+      <th>57117</th>
+      <td>0x1bdedcb65300141dbdfe4dfa045e5eaff212cb71b606...</td>
+      <td>0x1c69124ad98dc23bf50f264c505aa80097994a31b614...</td>
+      <td>1671772168</td>
+      <td>17371</td>
+      <td>0x33434ad846cdd5f23eb73ff09fe6fddd568284a0fb7d...</td>
+    </tr>
+    <tr>
+      <th>57118</th>
+      <td>0x18a68d1c93f540972cbbbbd23091290b1cf61bab3eef...</td>
+      <td>0x65f42f7d53a75bfe30c8ebec7f1d22486e1e39aa82b6...</td>
+      <td>1671774344</td>
+      <td>17373</td>
+      <td>0x33434ad846cdd5f23eb73ff09fe6fddd568284a0fb7d...</td>
+    </tr>
+    <tr>
+      <th>57119</th>
+      <td>0x6a9e377b1926446927fe3592d87673863456f3e45374...</td>
+      <td>0x34bf61c8bf811ac1b02d99e511a4332d395730aa818b...</td>
+      <td>1671774344</td>
+      <td>17373</td>
+      <td>0x33434ad846cdd5f23eb73ff09fe6fddd568284a0fb7d...</td>
+    </tr>
+    <tr>
+      <th>57120</th>
+      <td>0x58f6b35ba1bbeea367c90ce9f07a56db7831df51e815...</td>
+      <td>0x6677a73fbc0b56b893381768c59b81df60aa55e2a8a0...</td>
+      <td>1671775121</td>
+      <td>17374</td>
+      <td>0x33434ad846cdd5f23eb73ff09fe6fddd568284a0fb7d...</td>
+    </tr>
+  </tbody>
+</table>
+<p>57121 rows × 5 columns</p>
+</div>
+</div>
 </div>
 
 
+</section>
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
@@ -315,7 +547,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return localAlternateSentinel;
     }
   }
-  let localAlternateSentinel = 'alternate';
+  let localAlternateSentinel = 'default';
   // Dark / light mode switch
   window.quartoToggleColorScheme = () => {
     // Read the current dark / light value 
@@ -458,4 +690,5 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 
 
 
+<script src="../site_libs/quarto-html/zenscroll-min.js"></script>
 </body></html>
