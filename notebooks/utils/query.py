@@ -46,7 +46,7 @@ def query_account_creates():
     with open(f'data/account_creates_up_to_block_{last_query_block}.json', 'w') as f:
         json.dump({"account_creates":account_creates}, f)
     
-    return account_creates
+    # return account_creates
 
 def query_account_upgrades():
     account_upgrades = []
@@ -82,4 +82,4 @@ def query_account_upgrades():
     last_query_block = account_upgrades[-1]['created_at_block'] - 1
     with open(f'data/account_upgrades_up_to_block_{last_query_block}.json', 'w') as f:
         json.dump({"account_upgrades":account_upgrades}, f)
-    return account_upgrades
+    # return account_upgrades

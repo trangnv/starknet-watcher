@@ -1,6 +1,6 @@
 {
   "network_node_url": "",
-  "start": 21160,
+  "start": 36400,
   "global_events": [
     {
       "name": "account_upgraded",
