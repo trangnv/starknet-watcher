@@ -4,7 +4,7 @@
     "href": "notebooks/accounts_dashboard.html",
     "title": "Starknet Accounts Dashboard",
     "section": "",
-    "text": "Code\nfrom datetime import datetime\nlast_query_block = creates_data_df['created_at_block'].iloc[-1]\ntime_utc = datetime.utcfromtimestamp(creates_data_df['created_at'].iloc[-1]).strftime('%Y-%m-%d %H:%M:%S')\nprint(f'Last query block: {last_query_block}, at {time_utc} GMT')\n\n\nLast query block: 38793, at 2023-04-14 13:44:48 GMT"
+    "text": "Source code using Checkpoint as indexer to get Starknet data"
   },
   {
     "objectID": "notebooks/accounts_dashboard.html#querysaveload-data",
