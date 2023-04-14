@@ -3993,6 +3993,12 @@ vertical-align: -.125em;
    
   <ul>
   <li><a href="#querysaveload-data" id="toc-querysaveload-data" class="nav-link active" data-scroll-target="#querysaveload-data">Query/save/load data</a></li>
+  <li><a href="#analysis" id="toc-analysis" class="nav-link" data-scroll-target="#analysis">Analysis</a>
+  <ul class="collapse">
+  <li><a href="#events-count-by-day" id="toc-events-count-by-day" class="nav-link" data-scroll-target="#events-count-by-day">Events count by day</a></li>
+  <li><a href="#around-the-clock" id="toc-around-the-clock" class="nav-link" data-scroll-target="#around-the-clock">Around the clock</a></li>
+  <li><a href="#account-implementations" id="toc-account-implementations" class="nav-link" data-scroll-target="#account-implementations">Account implementations</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -4022,20 +4028,21 @@ vertical-align: -.125em;
 
 </header>
 
-<div class="cell" data-execution_count="47">
+<div class="cell" data-execution_count="67">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>last_query_block <span class="op">=</span> creates_data_df[<span class="st">&#39;created_at_block&#39;</span>].iloc[<span class="op">-</span><span class="dv">1</span>]</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>time_utc <span class="op">=</span> datetime.utcfromtimestamp(creates_data_df[<span class="st">&#39;created_at&#39;</span>].iloc[<span class="op">-</span><span class="dv">1</span>]).strftime(<span class="st">&#39;%Y-%m-</span><span class="sc">%d</span><span class="st"> %H:%M:%S&#39;</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&#39;Last query block: </span><span class="sc">{</span>last_query_block<span class="sc">}</span><span class="ss">, at </span><span class="sc">{</span>time_utc<span class="sc">}</span><span class="ss"> UTC&#39;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> datetime <span class="im">import</span> datetime</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>last_query_block <span class="op">=</span> creates_data_df[<span class="st">&#39;created_at_block&#39;</span>].iloc[<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>time_utc <span class="op">=</span> datetime.utcfromtimestamp(creates_data_df[<span class="st">&#39;created_at&#39;</span>].iloc[<span class="op">-</span><span class="dv">1</span>]).strftime(<span class="st">&#39;%Y-%m-</span><span class="sc">%d</span><span class="st"> %H:%M:%S&#39;</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&#39;Last query block: </span><span class="sc">{</span>last_query_block<span class="sc">}</span><span class="ss">, at </span><span class="sc">{</span>time_utc<span class="sc">}</span><span class="ss"> GMT&#39;</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>Last query block: 26239, at 2023-03-24 16:36:05 UTC</code></pre>
+<pre><code>Last query block: 38793, at 2023-04-14 13:44:48 GMT</code></pre>
 </div>
 </div>
 <section id="querysaveload-data" class="level2">
 <h2 class="anchored" data-anchor-id="querysaveload-data">Query/save/load data</h2>
-<div class="cell" data-execution_count="35">
+<div class="cell" data-execution_count="24">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -4047,48 +4054,166 @@ vertical-align: -.125em;
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># query_account_upgrades()</span></span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="ss">f&#39;data/account_creates_up_to_block_26238.json&#39;</span>) <span class="im">as</span> f:</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="ss">f&#39;data/account_creates_up_to_block_38792.json&#39;</span>) <span class="im">as</span> f:</span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    creates_data <span class="op">=</span> json.load(f)</span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>creates_data_df <span class="op">=</span> pd.DataFrame(creates_data[<span class="st">&#39;account_creates&#39;</span>]).drop_duplicates(subset<span class="op">=</span>[<span class="st">&#39;id&#39;</span>]).reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Account creates table (first 5 rows):&quot;</span>)</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tabulate(creates_data_df.head(<span class="dv">5</span>), headers<span class="op">=</span><span class="st">&#39;keys&#39;</span>, tablefmt<span class="op">=</span><span class="st">&#39;psql&#39;</span>))</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;</span><span class="ch">\n\n</span><span class="st">&quot;</span>)</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co">####</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="ss">f&#39;data/account_upgrades_up_to_block_26238.json&#39;</span>) <span class="im">as</span> f:</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    upgrades_data <span class="op">=</span> json.load(f)</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>upgrades_data_df <span class="op">=</span> pd.DataFrame(upgrades_data[<span class="st">&#39;account_upgrades&#39;</span>]).drop_duplicates(subset<span class="op">=</span>[<span class="st">&#39;id&#39;</span>]).reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Account upgrades table (first 5 rows):&quot;</span>)</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tabulate(upgrades_data_df.head(<span class="dv">5</span>), headers<span class="op">=</span><span class="st">&#39;keys&#39;</span>, tablefmt<span class="op">=</span><span class="st">&#39;psql&#39;</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>creates_data_df[<span class="st">&#39;datetime&#39;</span>] <span class="op">=</span> pd.to_datetime(creates_data_df[<span class="st">&#39;created_at&#39;</span>], unit<span class="op">=</span><span class="st">&#39;s&#39;</span>)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Account creates table (first 5 rows):&quot;</span>)</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tabulate(creates_data_df.head(<span class="dv">5</span>), headers<span class="op">=</span><span class="st">&#39;keys&#39;</span>, tablefmt<span class="op">=</span><span class="st">&#39;psql&#39;</span>))</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&#39;Shape: </span><span class="sc">{</span>creates_data_df<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">&#39;</span>)</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&#39;</span><span class="ch">\n\n</span><span class="st">&#39;</span>)</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co"># ####</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="ss">f&#39;data/account_upgrades_up_to_block_38787.json&#39;</span>) <span class="im">as</span> f:</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    upgrades_data <span class="op">=</span> json.load(f)</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>upgrades_data_df <span class="op">=</span> pd.DataFrame(upgrades_data[<span class="st">&#39;account_upgrades&#39;</span>]).drop_duplicates(subset<span class="op">=</span>[<span class="st">&#39;id&#39;</span>]).reset_index(drop<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>upgrades_data_df[<span class="st">&#39;datetime&#39;</span>] <span class="op">=</span> pd.to_datetime(upgrades_data_df[<span class="st">&#39;created_at&#39;</span>], unit<span class="op">=</span><span class="st">&#39;s&#39;</span>)</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">&quot;Account upgrades table (first 5 rows):&quot;</span>)</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tabulate(upgrades_data_df.head(<span class="dv">5</span>), headers<span class="op">=</span><span class="st">&#39;keys&#39;</span>, tablefmt<span class="op">=</span><span class="st">&#39;psql&#39;</span>))</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&#39;Shape: </span><span class="sc">{</span>upgrades_data_df<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">&#39;</span>)</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="co"># datetime are in GMT</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Account creates table (first 5 rows):
-+----+-------------------------------------------------------------------+-------------------------------------------------------------------+--------------+--------------------+
-|    | id                                                                | from_address                                                      |   created_at |   created_at_block |
-|----+-------------------------------------------------------------------+-------------------------------------------------------------------+--------------+--------------------|
-|  0 | 0x2b5f4af6bc5cfb032c83baef17ca99ee46f2d60997d5ad78d75efefa9617139 | 0x2a7f765dc8a9030e3ec393f51d5b0244a21ae55b71485f1142474b3c254537e |   1655372577 |               2710 |
-|  1 | 0x3ef53cf0fbad0edde37c1ee24ebc57433f39728dcaa9dfb2d2b365d3f9e8e6b | 0x179b1211aed20097bbba0369088db3d30ece0550015c08ea7e521bba99e76d2 |   1655380283 |               2711 |
-|  2 | 0x5f733c678cdcf3600e623c82be5fc773c487f361f164cd07c9bb8af24f5631a | 0x623efd6c07c219834db614400804e244b1cadfb6016cac45babd738b5c9d37a |   1655390756 |               2713 |
-|  3 | 0x6e884ba9506e4729858852c7097d6e741a8e4f5508cab4da2141d9f974672ec | 0x2f9aa38ee23fba8b283af247c603b05b2eaa160d68aa5a35cd9e02a2d0aafd3 |   1655397921 |               2714 |
-|  4 | 0x2d895f0a23171d5a008072c74b8169938e19834870d47b270f5a740aa008ed2 | 0x35cc2db92bd5f244ccee2afcf14a9bca0ec5243f0b093a9d2b639eeea4be936 |   1655405163 |               2715 |
-+----+-------------------------------------------------------------------+-------------------------------------------------------------------+--------------+--------------------+
++----+-------------------------------------------------------------------+-------------------------------------------------------------------+--------------+--------------------+---------------------+
+|    | id                                                                | from_address                                                      |   created_at |   created_at_block | datetime            |
+|----+-------------------------------------------------------------------+-------------------------------------------------------------------+--------------+--------------------+---------------------|
+|  0 | 0x2b5f4af6bc5cfb032c83baef17ca99ee46f2d60997d5ad78d75efefa9617139 | 0x2a7f765dc8a9030e3ec393f51d5b0244a21ae55b71485f1142474b3c254537e |   1655372577 |               2710 | 2022-06-16 09:42:57 |
+|  1 | 0x3ef53cf0fbad0edde37c1ee24ebc57433f39728dcaa9dfb2d2b365d3f9e8e6b | 0x179b1211aed20097bbba0369088db3d30ece0550015c08ea7e521bba99e76d2 |   1655380283 |               2711 | 2022-06-16 11:51:23 |
+|  2 | 0x5f733c678cdcf3600e623c82be5fc773c487f361f164cd07c9bb8af24f5631a | 0x623efd6c07c219834db614400804e244b1cadfb6016cac45babd738b5c9d37a |   1655390756 |               2713 | 2022-06-16 14:45:56 |
+|  3 | 0x6e884ba9506e4729858852c7097d6e741a8e4f5508cab4da2141d9f974672ec | 0x2f9aa38ee23fba8b283af247c603b05b2eaa160d68aa5a35cd9e02a2d0aafd3 |   1655397921 |               2714 | 2022-06-16 16:45:21 |
+|  4 | 0x2d895f0a23171d5a008072c74b8169938e19834870d47b270f5a740aa008ed2 | 0x35cc2db92bd5f244ccee2afcf14a9bca0ec5243f0b093a9d2b639eeea4be936 |   1655405163 |               2715 | 2022-06-16 18:46:03 |
++----+-------------------------------------------------------------------+-------------------------------------------------------------------+--------------+--------------------+---------------------+
+Shape: (481891, 5)
 
 
 
 Account upgrades table (first 5 rows):
-+----+-------------------------------------------------------------------+-------------------------------------------------------------------+--------------+--------------------+-------------------------------------------------------------------+
-|    | id                                                                | from_address                                                      |   created_at |   created_at_block | implementation                                                    |
-|----+-------------------------------------------------------------------+-------------------------------------------------------------------+--------------+--------------------+-------------------------------------------------------------------|
-|  0 | 0x124ccb5b22d5cd751008d2d1dca3bb9f1c145f694adadc39d589aa73a5020ea | 0x655d962eb3986f736caf9c27b425595855012b85afb0e4f57d39421d2f6f878 |   1650593011 |               1841 | 0x1bd7ca87f139693e6681be2042194cf631c4e8d77027bf0ea9e6d55fc6018ac |
-|  1 | 0x1b18b3290be8554ffd6e2460c386373ae8ab5d4b5be0710c0510a1e0078358  | 0x2ec7ac67d306407f0c2a0a367e7ba13ba53197d415587418eae1c62cb6e424b |   1650639147 |               1847 | 0x1bd7ca87f139693e6681be2042194cf631c4e8d77027bf0ea9e6d55fc6018ac |
-|  2 | 0x2314a266427aa7705d6ebaadb08b0b0c3adc4a8131d9cbc21cbdcda40db7cd8 | 0x4944d439be5d7250e7691b9d399d7f996370256fac20b8365f8ed16a4b9051a |   1650639147 |               1847 | 0x1bd7ca87f139693e6681be2042194cf631c4e8d77027bf0ea9e6d55fc6018ac |
-|  3 | 0x459be971b14ec5de49d93d2456ac30aa2d8997c936d1ca48aa59ef2cdd16b97 | 0x15aef0dd2b763c16008e6f5bf7ddd73dc40c8cec49722735115751431edd115 |   1650639147 |               1847 | 0x1bd7ca87f139693e6681be2042194cf631c4e8d77027bf0ea9e6d55fc6018ac |
-|  4 | 0x6954966b18946916cc40c43be79370dfadfe4079ffa4a957226d222e95ac66e | 0xe916eda2b5c226f6994c74a9fa05f6f0971672e913988841649062219ffe60  |   1650639147 |               1847 | 0x1bd7ca87f139693e6681be2042194cf631c4e8d77027bf0ea9e6d55fc6018ac |
-+----+-------------------------------------------------------------------+-------------------------------------------------------------------+--------------+--------------------+-------------------------------------------------------------------+</code></pre>
++----+-------------------------------------------------------------------+-------------------------------------------------------------------+--------------+--------------------+-------------------------------------------------------------------+---------------------+
+|    | id                                                                | from_address                                                      |   created_at |   created_at_block | implementation                                                    | datetime            |
+|----+-------------------------------------------------------------------+-------------------------------------------------------------------+--------------+--------------------+-------------------------------------------------------------------+---------------------|
+|  0 | 0x124ccb5b22d5cd751008d2d1dca3bb9f1c145f694adadc39d589aa73a5020ea | 0x655d962eb3986f736caf9c27b425595855012b85afb0e4f57d39421d2f6f878 |   1650593011 |               1841 | 0x1bd7ca87f139693e6681be2042194cf631c4e8d77027bf0ea9e6d55fc6018ac | 2022-04-22 02:03:31 |
+|  1 | 0x1b18b3290be8554ffd6e2460c386373ae8ab5d4b5be0710c0510a1e0078358  | 0x2ec7ac67d306407f0c2a0a367e7ba13ba53197d415587418eae1c62cb6e424b |   1650639147 |               1847 | 0x1bd7ca87f139693e6681be2042194cf631c4e8d77027bf0ea9e6d55fc6018ac | 2022-04-22 14:52:27 |
+|  2 | 0x2314a266427aa7705d6ebaadb08b0b0c3adc4a8131d9cbc21cbdcda40db7cd8 | 0x4944d439be5d7250e7691b9d399d7f996370256fac20b8365f8ed16a4b9051a |   1650639147 |               1847 | 0x1bd7ca87f139693e6681be2042194cf631c4e8d77027bf0ea9e6d55fc6018ac | 2022-04-22 14:52:27 |
+|  3 | 0x459be971b14ec5de49d93d2456ac30aa2d8997c936d1ca48aa59ef2cdd16b97 | 0x15aef0dd2b763c16008e6f5bf7ddd73dc40c8cec49722735115751431edd115 |   1650639147 |               1847 | 0x1bd7ca87f139693e6681be2042194cf631c4e8d77027bf0ea9e6d55fc6018ac | 2022-04-22 14:52:27 |
+|  4 | 0x6954966b18946916cc40c43be79370dfadfe4079ffa4a957226d222e95ac66e | 0xe916eda2b5c226f6994c74a9fa05f6f0971672e913988841649062219ffe60  |   1650639147 |               1847 | 0x1bd7ca87f139693e6681be2042194cf631c4e8d77027bf0ea9e6d55fc6018ac | 2022-04-22 14:52:27 |
++----+-------------------------------------------------------------------+-------------------------------------------------------------------+--------------+--------------------+-------------------------------------------------------------------+---------------------+
+Shape: (86852, 6)</code></pre>
+</div>
+</div>
+</section>
+<section id="analysis" class="level2">
+<h2 class="anchored" data-anchor-id="analysis">Analysis</h2>
+<div class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Just to make sure all the addresses that send `create_account` transactions are unique</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>creates_data_df[<span class="st">&#39;from_address&#39;</span>].unique().shape[<span class="dv">0</span>] <span class="op">==</span> creates_data_df.shape[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="22">
+<pre><code>True</code></pre>
+</div>
+</div>
+<section id="events-count-by-day" class="level3">
+<h3 class="anchored" data-anchor-id="events-count-by-day">Events count by day</h3>
+<p>This tells a lot about when users are interested in getting into the network.</p>
+<div class="cell" data-execution_count="63">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotly.graph_objects <span class="im">as</span> go</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> go.Figure()</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>s <span class="op">=</span> creates_data_df[<span class="st">&#39;datetime&#39;</span>]</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> s.groupby(s.dt.floor(<span class="st">&#39;d&#39;</span>)).size().reset_index(name<span class="op">=</span><span class="st">&#39;count&#39;</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>fig.add_trace(go.Scatter(x<span class="op">=</span>df[<span class="st">&#39;datetime&#39;</span>], y<span class="op">=</span>df[<span class="st">&#39;count&#39;</span>],</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>                    mode<span class="op">=</span><span class="st">&#39;markers&#39;</span>,</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>                    name<span class="op">=</span><span class="st">&#39;account_created&#39;</span>))</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>s <span class="op">=</span> upgrades_data_df[<span class="st">&#39;datetime&#39;</span>]</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> s.groupby(s.dt.floor(<span class="st">&#39;d&#39;</span>)).size().reset_index(name<span class="op">=</span><span class="st">&#39;count&#39;</span>)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>fig.add_trace(go.Scatter(x<span class="op">=</span>df[<span class="st">&#39;datetime&#39;</span>], y<span class="op">=</span>df[<span class="st">&#39;count&#39;</span>],</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>                     mode<span class="op">=</span><span class="st">&#39;markers&#39;</span>,</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>                     name<span class="op">=</span><span class="st">&#39;account_upgraded&#39;</span>))</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Edit the layout</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>fig.update_layout(title<span class="op">=</span><span class="st">&#39;Daily number of events&#39;</span>,</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>                   xaxis_title<span class="op">=</span><span class="st">&#39;Day&#39;</span>,</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>                   autosize<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a><span class="co"># fig.add_vline(x=&#39;2023-03-23&#39;, annotation_text=&#39;ARB&#39;, line_width=2, line_dash=&quot;dash&quot;, line_color=&quot;green&quot;)</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>fig.add_vrect(x0<span class="op">=</span><span class="st">&quot;2023-03-22&quot;</span>, x1<span class="op">=</span><span class="st">&quot;2023-03-24&quot;</span>, row<span class="op">=</span><span class="st">&quot;all&quot;</span>, col<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>              annotation_text<span class="op">=</span><span class="st">&quot;ARB airdrop&quot;</span>, annotation_position<span class="op">=</span><span class="st">&quot;top right&quot;</span>,</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>              fillcolor<span class="op">=</span><span class="st">&quot;green&quot;</span>, opacity<span class="op">=</span><span class="fl">0.25</span>, line_width<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<pre><code>Unable to display output for mime type(s): application/vnd.plotly.v1+json</code></pre>
+</div>
+</div>
+</section>
+<section id="around-the-clock" class="level3">
+<h3 class="anchored" data-anchor-id="around-the-clock">Around the clock</h3>
+<p>Not much information, just when (most) users sleep.</p>
+<div class="cell" data-execution_count="72">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> go.Figure()</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>s <span class="op">=</span> creates_data_df[<span class="st">&#39;datetime&#39;</span>]</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> s.groupby(s.dt.floor(<span class="st">&#39;h&#39;</span>)).size().reset_index(name<span class="op">=</span><span class="st">&#39;count&#39;</span>)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>_df <span class="op">=</span> df.groupby([df[<span class="st">&#39;datetime&#39;</span>].dt.hour])[<span class="st">&#39;count&#39;</span>].<span class="bu">sum</span>().reset_index(name<span class="op">=</span><span class="st">&#39;count&#39;</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>fig.add_trace(go.Bar(x<span class="op">=</span>_df[<span class="st">&#39;datetime&#39;</span>], y<span class="op">=</span>_df[<span class="st">&#39;count&#39;</span>], name<span class="op">=</span><span class="st">&#39;account_created&#39;</span>))</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>s <span class="op">=</span> upgrades_data_df[<span class="st">&#39;datetime&#39;</span>]</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> s.groupby(s.dt.floor(<span class="st">&#39;h&#39;</span>)).size().reset_index(name<span class="op">=</span><span class="st">&#39;count&#39;</span>)</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>_df <span class="op">=</span> df.groupby([df[<span class="st">&#39;datetime&#39;</span>].dt.hour])[<span class="st">&#39;count&#39;</span>].<span class="bu">sum</span>().reset_index(name<span class="op">=</span><span class="st">&#39;count&#39;</span>)</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>fig.add_trace(go.Bar(x<span class="op">=</span>_df[<span class="st">&#39;datetime&#39;</span>], y<span class="op">=</span>_df[<span class="st">&#39;count&#39;</span>], name<span class="op">=</span><span class="st">&#39;account_upgraded&#39;</span>))</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>fig.update_layout(title<span class="op">=</span><span class="st">&#39;Number of events around the clock&#39;</span>,</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>                   xaxis_title<span class="op">=</span><span class="st">&#39;Hour (UTC)&#39;</span>,</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>                   autosize<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>fig.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<pre><code>Unable to display output for mime type(s): application/vnd.plotly.v1+json</code></pre>
+</div>
+</div>
+</section>
+<section id="account-implementations" class="level3">
+<h3 class="anchored" data-anchor-id="account-implementations">Account implementations</h3>
+<p>Or contract class which is used by the account. - This is not the whole picture, as <code>account_created</code> event does not contain the implementation. - But by far <a href="https://starkscan.co/class/0x033434ad846cdd5f23eb73ff09fe6fddd568284a0fb7d1be20ee482f044dabe2">ArgentAccount</a> is the most implementation that accounts are upgraded to.</p>
+<div class="cell" data-execution_count="85">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>_df <span class="op">=</span> upgrades_data_df[<span class="st">&#39;implementation&#39;</span>].value_counts().rename_axis(<span class="st">&#39;implementation&#39;</span>).reset_index(name<span class="op">=</span><span class="st">&#39;counts&#39;</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(tabulate(_df, headers<span class="op">=</span><span class="st">&#39;keys&#39;</span>, tablefmt<span class="op">=</span><span class="st">&#39;psql&#39;</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>+----+-------------------------------------------------------------------+----------+
+|    | implementation                                                    |   counts |
+|----+-------------------------------------------------------------------+----------|
+|  0 | 0x33434ad846cdd5f23eb73ff09fe6fddd568284a0fb7d1be20ee482f044dabe2 |    72987 |
+|  1 | 0x1a7820094feaf82d53f53f214b81292d717e7bb9a92bb2488092cd306f3993f |    11331 |
+|  2 | 0x1bd7ca87f139693e6681be2042194cf631c4e8d77027bf0ea9e6d55fc6018ac |     2225 |
+|  3 | 0x69577e6756a99b584b5d1ce8e60650ae33b6e2b13541783458268f07da6b38a |      295 |
+|  4 | 0x25319262b1256b464b0a7b7678fc3fa1519015cee5a559a22dfa3e52bdef2a8 |        1 |
+|  5 | 0x4507edaf81d13231eddb027922a7d535a5c0bd647d953b7f2fa84926d659ec9 |        1 |
+|  6 | 0x41e620242076112068698358a60b4f55ba647191663e05eff434a8c84e63cab |        1 |
+|  7 | 0x1ce9e67ecfbe0d645db2425ba00bcef7c29a73d87e74d3d96bfaffc237be1ec |        1 |
+|  8 | 0x7c3a28432b38cdc92f2d897227d2a125857edbf2c3d4b74831eac6c49f2dba5 |        1 |
+|  9 | 0x47bde3fe273d58d782a9fcd5c8a9a9ecace9e4179c92353fd038c31df534482 |        1 |
+| 10 | 0x17ac03837c4d31e6786ca44a980352f4ebe679424a09b0516d79a80acf6aa03 |        1 |
+| 11 | 0x360d811605f73d73bf087754350e4b11f665adb835e90c539f67fac9b74fce6 |        1 |
+| 12 | 0x32c7141696f6536aa787d226b9c08b825b52e0ef0cfbbbe67fdaa2888764bf  |        1 |
+| 13 | 0x6acbc95b857d045ff826ad3f499b1f914b761a2252c9228da75bcddb448ca52 |        1 |
+| 14 | 0x5c67e1ea8a33b2699a8364f0b0bd5b30bb08b2a41af6e962f8d5f43ce8ed33e |        1 |
+| 15 | 0x3916c2ed1867662565655d663be0067dcdc12439bc861b5e1c67e4dd1d363ae |        1 |
+| 16 | 0x6c22f0ff97bd44e14bbd1414436b92faa7cfaa037fd0c94808d425a6cc9be52 |        1 |
+| 17 | 0x709978effc9994981c22c4bcc504b965cea36cfb8454c49026b2fead96e0f3  |        1 |
++----+-------------------------------------------------------------------+----------+</code></pre>
 </div>
 </div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
